@@ -22,14 +22,16 @@ namespace InterfaceDemo
 
     public class Calculate : ICalculate
     {
+      //  StreamWriter sw = new StreamWriter(@"D:\Shaurya Interaction\add.txt");
         public int Addition(int a, int b)
         {
-            return (a + b);
+            return a + b;
+            
         }
 
         public int Multiplication(int a, int b)
         {
-            return (a * b);
+            return a * b;
         }
     }
 
@@ -37,23 +39,27 @@ namespace InterfaceDemo
     {
         static void Main(string[] args)
         {
+            StreamWriter sw = null;
             try
             {
-                List<int> aa = new List<int>();
                 Console.WriteLine("Enter two numbers:");
                 int a = Convert.ToInt32(Console.ReadLine());
                 int b = Convert.ToInt32(Console.ReadLine());
                 Calculate c = new Calculate();
-                aa.Add(c.Addition(a, b));
-                aa.Add(c.Multiplication(a, b));
-                FileStream fs = new FileStream(@"D:\Shaurya Interaction\AddMul", FileMode.Create, FileAccess.Write);
-                XmlSerializer xs = new XmlSerializer(typeof(List<int>));
-                xs.Serialize(fs, aa);
+                sw = new StreamWriter(@"D:\Shaurya Interaction\add.txt");
+                sw.WriteLine("Addition:" +(c.Addition(a,b)).ToString());
+                sw.WriteLine("Multiplication:" + (c.Multiplication(a , b)).ToString());
+               
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            finally
+            {
+                sw.Close();
+            }
+           
         }
     }
 
